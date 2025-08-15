@@ -109,8 +109,8 @@ function calculateTotalScore() {
 }
 
 function getRiskLevel(score) {
-    if (score <= 3) return 'low';
-    if (score <= 8) return 'medium';
+    if (score <= 5) return 'low';
+    if (score <= 10) return 'medium';
     return 'high';
 }
 
@@ -135,11 +135,15 @@ function showResults() {
 
     if (riskLevel === 'low') {
         resultIcon.className = 'w-24 h-24 mx-auto rounded-full flex items-center justify-center mb-4 risk-low';
-        resultTitle.textContent = 'Risiko Rendah';
+        resultTitle.textContent = 'Risiko RINGAN';
         resultDescription.innerHTML = `
-                    <p class="text-sm">Berdasarkan assessment ini, kondisi jantung Anda menunjukkan risiko yang rendah. Gejala yang Anda alami masih dalam batas normal atau minimal.</p>
+                    <p class="text-sm">Berdasarkan assessment ini, kondisi jantung Anda menunjukkan <strong>risiko ringan</strong>. Gejala yang Anda alami masih dalam kategori ringan dan dapat dikelola dengan baik.</p>
                 `;
         recommendations.innerHTML = `
+                    <li class="flex items-start">
+                        <span class="text-green-500 mr-2">📋</span>
+                        <span><strong>Jika mengganggu, bisa ke poli rawat jalan/sesuai jadwal kontrol</strong></span>
+                    </li>
                     <li class="flex items-start">
                         <span class="text-green-500 mr-2">✓</span>
                         <span>Pertahankan gaya hidup sehat dengan olahraga teratur</span>
@@ -150,59 +154,55 @@ function showResults() {
                     </li>
                     <li class="flex items-start">
                         <span class="text-green-500 mr-2">✓</span>
-                        <span>Rutin check-up kesehatan setahun sekali</span>
-                    </li>
-                    <li class="flex items-start">
-                        <span class="text-green-500 mr-2">✓</span>
-                        <span>Hindari merokok dan konsumsi alkohol berlebihan</span>
+                        <span>Rutin check-up kesehatan sesuai jadwal dokter</span>
                     </li>
                 `;
     } else if (riskLevel === 'medium') {
         resultIcon.className = 'w-24 h-24 mx-auto rounded-full flex items-center justify-center mb-4 risk-medium';
-        resultTitle.textContent = 'Risiko Sedang';
+        resultTitle.textContent = 'Risiko SEDANG';
         resultDescription.innerHTML = `
-                    <p class="text-sm">Assessment menunjukkan beberapa gejala yang perlu mendapat perhatian. Kondisi ini memerlukan monitoring lebih ketat dan kemungkinan evaluasi medis.</p>
+                    <p class="text-sm">Assessment menunjukkan <strong>risiko sedang</strong> yang memerlukan perhatian medis. Beberapa gejala yang Anda alami perlu dievaluasi lebih lanjut oleh dokter.</p>
                 `;
         recommendations.innerHTML = `
                     <li class="flex items-start">
-                        <span class="text-yellow-500 mr-2">⚠</span>
-                        <span>Konsultasikan dengan dokter dalam 1-2 minggu</span>
+                        <span class="text-yellow-600 mr-2">🏥</span>
+                        <span><strong>Rawat Jalan - Segera konsultasi ke dokter</strong></span>
                     </li>
                     <li class="flex items-start">
-                        <span class="text-yellow-500 mr-2">⚠</span>
-                        <span>Monitor gejala harian dan catat perubahan</span>
+                        <span class="text-yellow-600 mr-2">📝</span>
+                        <span>Catat dan monitor gejala yang dialami setiap hari</span>
                     </li>
                     <li class="flex items-start">
-                        <span class="text-yellow-500 mr-2">⚠</span>
-                        <span>Kurangi aktivitas berat yang memicu gejala</span>
+                        <span class="text-yellow-600 mr-2">⚠</span>
+                        <span>Batasi aktivitas yang memicu atau memperburuk gejala</span>
                     </li>
                     <li class="flex items-start">
-                        <span class="text-yellow-500 mr-2">⚠</span>
-                        <span>Pertimbangkan pemeriksaan EKG dan echocardiografi</span>
+                        <span class="text-yellow-600 mr-2">🔍</span>
+                        <span>Siapkan untuk pemeriksaan lanjutan (EKG, Echo, Lab)</span>
                     </li>
                 `;
     } else {
         resultIcon.className = 'w-24 h-24 mx-auto rounded-full flex items-center justify-center mb-4 risk-high';
-        resultTitle.textContent = 'Risiko Tinggi';
+        resultTitle.textContent = 'Risiko BERAT';
         resultDescription.innerHTML = `
-                    <p class="text-sm"><strong>Perhatian:</strong> Gejala yang Anda alami menunjukkan risiko tinggi dan memerlukan evaluasi medis segera. Jangan tunda untuk berkonsultasi dengan dokter.</p>
+                    <p class="text-sm"><strong>PERHATIAN:</strong> Assessment menunjukkan <strong>risiko berat</strong>. Gejala yang Anda alami memerlukan evaluasi dan penanganan medis segera di unit gawat darurat.</p>
                 `;
         recommendations.innerHTML = `
                     <li class="flex items-start">
-                        <span class="text-red-500 mr-2">⚠</span>
-                        <span><strong>Segera konsultasi dengan dokter spesialis jantung</strong></span>
+                        <span class="text-red-500 mr-2">🚨</span>
+                        <span><strong>IGD - SEGERA ke Unit Gawat Darurat</strong></span>
                     </li>
                     <li class="flex items-start">
-                        <span class="text-red-500 mr-2">⚠</span>
-                        <span>Hindari aktivitas berat sampai mendapat clearance medis</span>
+                        <span class="text-red-500 mr-2">🚫</span>
+                        <span>HINDARI aktivitas fisik sampai mendapat penanganan medis</span>
                     </li>
                     <li class="flex items-start">
-                        <span class="text-red-500 mr-2">⚠</span>
-                        <span>Siapkan daftar obat dan riwayat medis untuk konsultasi</span>
+                        <span class="text-red-500 mr-2">📱</span>
+                        <span>Siapkan kontak darurat dan informasi medis penting</span>
                     </li>
                     <li class="flex items-start">
-                        <span class="text-red-500 mr-2">⚠</span>
-                        <span>Jika gejala memburuk, segera ke unit gawat darurat</span>
+                        <span class="text-red-500 mr-2">⚡</span>
+                        <span>Jika gejala memburuk, SEGERA hubungi 112 atau ke IGD terdekat</span>
                     </li>
                 `;
     }
@@ -227,8 +227,3 @@ function resetAssessment() {
     document.getElementById('progressBar').style.width = '0%';
     document.getElementById('progressText').textContent = '0/5';
 }
-
-// Initialize
-document.addEventListener('DOMContentLoaded', function () {
-    currentQuestion = 0;
-});

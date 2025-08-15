@@ -4,19 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Self Assessment Risiko Jantung</title>
+    <script src="asset/splash.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="asset/index.css">
+    <link rel="stylesheet" href="asset/splash.css">
+
+    
+    <link rel="apple-touch-icon" sizes="57x57" href="/asset/icon/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/asset/icon/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/asset/icon/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/asset/icon/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/asset/icon/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/asset/icon/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/asset/icon/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/asset/icon/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/asset/icon/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="/asset/icon/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/asset/icon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/asset/icon/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/asset/icon/favicon-16x16.png">
+<link rel="manifest" href="/asset/icon/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/asset/icon/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
     <meta name="description" content="SIPITUNG (Sistem lnformasi Penyakit Jantung) | Self Assessment Risiko Jantung">
     <meta name="keywords" content="jantung, risiko, self assessment, kesehatan, kesehatan jantung, evaluasi jantung">
 </head>
 <body class="bg-gray-50 min-h-screen">
+    <!-- Splash Screen -->
+    <div id="splashScreen" class="fixed inset-0 gradient-bg flex flex-col items-center justify-center z-50">
+        <div class="text-center text-white">
+            <!-- Logo/Icon -->
+            <div class="bounce-in mb-8">
+                <div class="w-32 h-32 mx-auto rounded-full flex items-center justify-center mb-6">
+               
+                <img class="inset-0 w-32 h-32 mx-auto object-cover " src="/asset/AssetMobile.png" alt="logo SIPITUNG" class="w-12 h-12">
+                </div>
+            </div>
+            
+            <!-- App Title -->
+            <div class="fade-in mb-8">
+                <h1 class="text-lg opacity-90 mb-1">Self Assessment Risiko Jantung</h1>
+                <p class="text-sm opacity-75">Evaluasi kesehatan jantung Anda dengan mudah dengan SIPITUNG (Sistem Informasi Penyakit Jantung)</p>
+            </div>
+            
+            <!-- Loading Animation -->
+            <div class="fade-in">
+                <div class="loading-dots mb-4">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <p class="text-sm opacity-75">Memuat aplikasi...</p>
+            </div>
+            
+            <!-- Version Info -->
+            <div class="absolute bottom-8 left-0 right-0 text-center fade-in">
+                <p class="text-xs opacity-60">Versi 1.0 • Untuk keperluan skrining awal</p>
+                <p class="text-xs opacity-60 mt-1">⚠️ Tidak menggantikan konsultasi medis</p>
+            </div>
+        </div>
+    </div>
     <!-- Header -->
     <div class="gradient-bg text-white p-6 text-center">
         <div class="pulse-animation inline-block mb-4">
-            <div class="w-16 h-16 mx-auto bg-white bg-opacity-20 rounded-full flex items-center justify-center">
-                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/>
-                </svg>
+            <div class="w-36 h-36 mx-auto bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+                <img class="inset-0 h-3/4 w-3/4 object-cover " src="https://api.rsudaa.singkawangkota.go.id/api/cdn/image/1755252101302-Asset9@4x.webp" alt="logo SIPITUNG" class="w-12 h-12">
             </div>
         </div>
         
