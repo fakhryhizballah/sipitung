@@ -1,5 +1,5 @@
-let currentQuestion = 0;
-let totalQuestions = 5;
+let currentQuestion2 = 0;
+let totalQuestions2 = 5;
 let assessmentData = {};
 let totalScore = 0;
 
@@ -29,7 +29,7 @@ function showQuestion(questionNum) {
         prevBtn.classList.remove('hidden');
     }
 
-    if (questionNum === totalQuestions) {
+    if (questionNum === totalQuestions2) {
         nextBtn.textContent = 'Lihat Hasil';
     } else {
         nextBtn.textContent = 'Selanjutnya';
@@ -68,36 +68,36 @@ function selectSymptom(element, symptom, score) {
 
     // Auto advance after short delay for better UX
     setTimeout(() => {
-        if (currentQuestion < totalQuestions) {
-            nextQuestion();
+        if (currentQuestion2 < totalQuestions2) {
+            nextQuestion2();
         } else {
-            showResults();
+            resultsAssessmentScreen();
         }
     }, 800);
 }
 
-function nextQuestion() {
-    if (currentQuestion < totalQuestions) {
-        currentQuestion++;
-        showQuestion(currentQuestion);
+function nextQuestion2() {
+    if (currentQuestion2 < totalQuestions2) {
+        currentQuestion2++;
+        showQuestion(currentQuestion2);
         updateProgress();
     } else {
-        showResults();
+        resultsAssessmentScreen();
     }
 }
 
-function previousQuestion() {
-    if (currentQuestion > 1) {
-        currentQuestion--;
-        showQuestion(currentQuestion);
+function previousQuestion2() {
+    if (currentQuestion2 > 1) {
+        currentQuestion2--;
+        showQuestion(currentQuestion2);
         updateProgress();
     }
 }
 
 function updateProgress() {
-    const progress = (currentQuestion / totalQuestions) * 100;
+    const progress = (currentQuestion2 / totalQuestions2) * 100;
     document.getElementById('progressBar').style.width = progress + '%';
-    document.getElementById('progressText').textContent = currentQuestion + '/' + totalQuestions;
+    document.getElementById('progressText').textContent = currentQuestion2 + '/' + totalQuestions2;
 }
 
 function calculateTotalScore() {
@@ -114,7 +114,7 @@ function getRiskLevel(score) {
     return 'high';
 }
 
-function showResults() {
+function resultsAssessmentScreen() {
     document.getElementById('assessmentScreen').classList.add('hidden');
     document.getElementById('resultsScreen').classList.remove('hidden');
 
@@ -209,7 +209,7 @@ function showResults() {
 }
 
 function resetAssessment() {
-    currentQuestion = 0;
+    currentQuestion2 = 0;
     assessmentData = {};
     totalScore = 0;
 

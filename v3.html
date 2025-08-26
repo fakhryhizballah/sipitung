@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Health Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'heart-red': '#e53e3e',
+                        'heart-pink': '#f56565',
+                        'heart-light': '#fed7d7'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .heart-beat {
+            animation: heartbeat 2s ease-in-out infinite;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            14% { transform: scale(1.1); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.1); }
+            70% { transform: scale(1); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .pulse-slow {
+            animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-red-50 via-pink-50 to-rose-100 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white/95 backdrop-blur-sm shadow-lg fixed w-full top-0 z-50 border-b border-red-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="text-heart-red text-3xl heart-beat">❤️</div>
+                    <span class="font-bold text-xl text-gray-800">Heart Health</span>
+                </div>
+                
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <button onclick="showSection('dashboard')" class="nav-btn bg-heart-red text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-all duration-300 transform hover:scale-105">Dashboard</button>
+                        <button onclick="showSection('info')" class="nav-btn text-gray-700 hover:text-heart-red px-4 py-2 rounded-lg hover:bg-red-50 transition-all duration-300">Info Jantung</button>
+                        <button onclick="showSection('assessment')" class="nav-btn text-gray-700 hover:text-heart-red px-4 py-2 rounded-lg hover:bg-red-50 transition-all duration-300">Self Assessment</button>
+                    </div>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button onclick="toggleMobileMenu()" class="text-gray-700 hover:text-heart-red p-2">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="md:hidden hidden bg-white border-t border-red-100">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <button onclick="showSection('dashboard'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 text-gray-700 hover:text-heart-red hover:bg-red-50 rounded-md">Dashboard</button>
+                <button onclick="showSection('info'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 text-gray-700 hover:text-heart-red hover:bg-red-50 rounded-md">Info Jantung</button>
+                <button onclick="showSection('assessment'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 text-gray-700 hover:text-heart-red hover:bg-red-50 rounded-md">Self Assessment</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="pt-16">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section-content min-h-screen p-6">
+            <div class="max-w-7xl mx-auto">
+                <!-- Hero Section -->
+                <div class="text-center mb-12 fade-in">
+                    <h1 class="text-5xl font-bold text-gray-800 mb-4">
+                        Jaga Kesehatan <span class="text-heart-red">Jantung</span> Anda
+                    </h1>
+                    <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+                        Pantau, pelajari, dan jaga kesehatan jantung Anda dengan tools dan informasi terpercaya
+                    </p>
+                    <div class="flex justify-center space-x-4">
+                        <button onclick="showSection('assessment')" class="bg-heart-red text-white px-8 py-4 rounded-xl font-semibold hover:bg-red-600 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                            Mulai Assessment
+                        </button>
+                        <button onclick="showSection('info')" class="bg-white text-heart-red border-2 border-heart-red px-8 py-4 rounded-xl font-semibold hover:bg-red-50 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                            Pelajari Lebih Lanjut
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                    <div class="bg-white rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Detak Jantung Normal</p>
+                                <p class="text-3xl font-bold text-heart-red">60-100</p>
+                                <p class="text-xs text-gray-500">BPM saat istirahat</p>
+                            </div>
+                            <div class="text-4xl text-red-400 pulse-slow">💗</div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Tekanan Darah Ideal</p>
+                                <p class="text-3xl font-bold text-green-600">120/80</p>
+                                <p class="text-xs text-gray-500">mmHg</p>
+                            </div>
+                            <div class="text-4xl text-green-400">🫀</div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Kolesterol Total</p>
+                                <p class="text-3xl font-bold text-blue-600">&lt;200</p>
+                                <p class="text-xs text-gray-500">mg/dL</p>
+                            </div>
+                            <div class="text-4xl text-blue-400">🔬</div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Olahraga per Minggu</p>
+                                <p class="text-3xl font-bold text-purple-600">150</p>
+                                <p class="text-xs text-gray-500">menit minimum</p>
+                            </div>
+                            <div class="text-4xl text-purple-400">🏃‍♂️</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Tips -->
+                <div class="bg-white rounded-3xl p-8 shadow-xl mb-8">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Tips Kesehatan Jantung Hari Ini</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="text-center p-6 bg-gradient-to-br from-red-50 to-pink-50 rounded-2xl">
+                            <div class="text-5xl mb-4">🥗</div>
+                            <h3 class="font-semibold text-lg mb-2">Makan Sehat</h3>
+                            <p class="text-gray-600">Konsumsi buah, sayuran, dan biji-bijian untuk jantung yang sehat</p>
+                        </div>
+                        <div class="text-center p-6 bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl">
+                            <div class="text-5xl mb-4">🚶‍♀️</div>
+                            <h3 class="font-semibold text-lg mb-2">Aktif Bergerak</h3>
+                            <p class="text-gray-600">30 menit olahraga ringan setiap hari dapat memperkuat jantung</p>
+                        </div>
+                        <div class="text-center p-6 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl">
+                            <div class="text-5xl mb-4">😌</div>
+                            <h3 class="font-semibold text-lg mb-2">Kelola Stres</h3>
+                            <p class="text-gray-600">Meditasi dan relaksasi membantu menjaga tekanan darah normal</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Info Section -->
+        <section id="info" class="section-content hidden min-h-screen p-6">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-12">
+                    <h1 class="text-4xl font-bold text-gray-800 mb-4">Informasi Kesehatan Jantung</h1>
+                    <p class="text-xl text-gray-600">Pelajari lebih dalam tentang jantung dan cara menjaga kesehatannya</p>
+                </div>
+
+                <!-- Heart Anatomy -->
+                <div class="bg-white rounded-3xl p-8 shadow-xl mb-8">
+                    <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">Anatomi Jantung</h2>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                        <div class="text-center">
+                            <div class="text-9xl mb-4 heart-beat">❤️</div>
+                            <p class="text-lg text-gray-600">Jantung adalah organ vital yang memompa darah ke seluruh tubuh</p>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="p-4 bg-red-50 rounded-xl">
+                                <h3 class="font-semibold text-lg text-heart-red">Atrium Kanan & Kiri</h3>
+                                <p class="text-gray-600">Ruang atas jantung yang menerima darah dari tubuh dan paru-paru</p>
+                            </div>
+                            <div class="p-4 bg-pink-50 rounded-xl">
+                                <h3 class="font-semibold text-lg text-heart-red">Ventrikel Kanan & Kiri</h3>
+                                <p class="text-gray-600">Ruang bawah yang memompa darah ke paru-paru dan seluruh tubuh</p>
+                            </div>
+                            <div class="p-4 bg-rose-50 rounded-xl">
+                                <h3 class="font-semibold text-lg text-heart-red">Katup Jantung</h3>
+                                <p class="text-gray-600">Mengatur aliran darah dan mencegah aliran balik</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Heart Diseases -->
+                <div class="bg-white rounded-3xl p-8 shadow-xl mb-8">
+                    <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">Penyakit Jantung Umum</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="p-6 border border-red-200 rounded-2xl hover:shadow-lg transition-all duration-300">
+                            <div class="text-4xl mb-4 text-center">🫀</div>
+                            <h3 class="font-semibold text-lg mb-2 text-heart-red">Penyakit Jantung Koroner</h3>
+                            <p class="text-gray-600 text-sm">Penyempitan atau penyumbatan arteri koroner yang memasok darah ke jantung</p>
+                        </div>
+                        <div class="p-6 border border-red-200 rounded-2xl hover:shadow-lg transition-all duration-300">
+                            <div class="text-4xl mb-4 text-center">💥</div>
+                            <h3 class="font-semibold text-lg mb-2 text-heart-red">Hipertensi</h3>
+                            <p class="text-gray-600 text-sm">Tekanan darah tinggi yang dapat merusak pembuluh darah dan jantung</p>
+                        </div>
+                        <div class="p-6 border border-red-200 rounded-2xl hover:shadow-lg transition-all duration-300">
+                            <div class="text-4xl mb-4 text-center">⚡</div>
+                            <h3 class="font-semibold text-lg mb-2 text-heart-red">Aritmia</h3>
+                            <p class="text-gray-600 text-sm">Gangguan irama jantung yang tidak normal, terlalu cepat atau lambat</p>
+                        </div>
+                        <div class="p-6 border border-red-200 rounded-2xl hover:shadow-lg transition-all duration-300">
+                            <div class="text-4xl mb-4 text-center">🔄</div>
+                            <h3 class="font-semibold text-lg mb-2 text-heart-red">Gagal Jantung</h3>
+                            <p class="text-gray-600 text-sm">Kondisi ketika jantung tidak dapat memompa darah secara efektif</p>
+                        </div>
+                        <div class="p-6 border border-red-200 rounded-2xl hover:shadow-lg transition-all duration-300">
+                            <div class="text-4xl mb-4 text-center">🚫</div>
+                            <h3 class="font-semibold text-lg mb-2 text-heart-red">Serangan Jantung</h3>
+                            <p class="text-gray-600 text-sm">Kondisi darurat ketika aliran darah ke jantung terhenti</p>
+                        </div>
+                        <div class="p-6 border border-red-200 rounded-2xl hover:shadow-lg transition-all duration-300">
+                            <div class="text-4xl mb-4 text-center">🫁</div>
+                            <h3 class="font-semibold text-lg mb-2 text-heart-red">Penyakit Katup</h3>
+                            <p class="text-gray-600 text-sm">Kerusakan pada katup jantung yang mengatur aliran darah</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Prevention Tips -->
+                <div class="bg-white rounded-3xl p-8 shadow-xl">
+                    <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">Tips Pencegahan</h2>
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4 p-4 bg-green-50 rounded-xl">
+                            <div class="text-3xl">🍎</div>
+                            <div>
+                                <h3 class="font-semibold text-lg text-green-700">Pola Makan Sehat</h3>
+                                <p class="text-gray-600">Konsumsi makanan rendah lemak jenuh, kolesterol, dan sodium. Perbanyak buah, sayuran, dan whole grain.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4 p-4 bg-blue-50 rounded-xl">
+                            <div class="text-3xl">🏃‍♂️</div>
+                            <div>
+                                <h3 class="font-semibold text-lg text-blue-700">Aktivitas Fisik Rutin</h3>
+                                <p class="text-gray-600">Lakukan olahraga aerobik minimal 150 menit per minggu atau 30 menit sehari, 5 hari seminggu.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4 p-4 bg-purple-50 rounded-xl">
+                            <div class="text-3xl">🚭</div>
+                            <div>
+                                <h3 class="font-semibold text-lg text-purple-700">Hindari Rokok</h3>
+                                <p class="text-gray-600">Rokok merusak pembuluh darah dan meningkatkan risiko penyakit jantung secara signifikan.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4 p-4 bg-yellow-50 rounded-xl">
+                            <div class="text-3xl">⚖️</div>
+                            <div>
+                                <h3 class="font-semibold text-lg text-yellow-700">Jaga Berat Badan Ideal</h3>
+                                <p class="text-gray-600">Obesitas meningkatkan beban kerja jantung dan risiko diabetes serta hipertensi.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Assessment Section -->
+        <section id="assessment" class="section-content hidden min-h-screen p-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-12">
+                    <h1 class="text-4xl font-bold text-gray-800 mb-4">Self Assessment Risiko Jantung</h1>
+                    <p class="text-xl text-gray-600">Evaluasi risiko kesehatan jantung Anda dengan menjawab pertanyaan berikut</p>
+                </div>
+
+                <!-- Assessment Form -->
+                <div class="bg-white rounded-3xl p-8 shadow-xl">
+                    <div id="assessmentForm">
+                        <div class="mb-8">
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-sm font-medium text-gray-600">Pertanyaan <span id="currentQuestion">1</span> dari <span id="totalQuestions">10</span></span>
+                                <div class="w-full max-w-xs bg-gray-200 rounded-full h-2 ml-4">
+                                    <div id="progressBar" class="bg-heart-red h-2 rounded-full transition-all duration-300" style="width: 10%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="questionContainer" class="mb-8">
+                            <!-- Questions will be populated by JavaScript -->
+                        </div>
+
+                        <div class="flex justify-between">
+                            <button id="prevBtn" onclick="previousQuestion()" class="px-6 py-3 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-all duration-300 disabled:opacity-50" disabled>
+                                Sebelumnya
+                            </button>
+                            <button id="nextBtn" onclick="nextQuestion()" class="px-6 py-3 bg-heart-red text-white rounded-lg hover:bg-red-600 transition-all duration-300">
+                                Selanjutnya
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Results -->
+                    <div id="assessmentResults" class="hidden">
+                        <div class="text-center mb-8">
+                            <div id="resultIcon" class="text-8xl mb-4"></div>
+                            <h2 id="resultTitle" class="text-3xl font-bold mb-4"></h2>
+                            <p id="resultDescription" class="text-lg text-gray-600 mb-6"></p>
+                            <div id="riskScore" class="text-4xl font-bold mb-6"></div>
+                        </div>
+                        
+                        <div id="recommendations" class="space-y-4 mb-8">
+                            <!-- Recommendations will be populated by JavaScript -->
+                        </div>
+                        
+                        <div class="text-center">
+                            <button onclick="restartAssessment()" class="px-8 py-3 bg-heart-red text-white rounded-lg hover:bg-red-600 transition-all duration-300">
+                                Ulangi Assessment
+                            </button>
+                            <p class="text-sm text-gray-500 mt-4">
+                                * Assessment ini hanya untuk edukasi. Konsultasikan dengan dokter untuk evaluasi medis yang akurat.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Global variables
+        let currentQuestionIndex = 0;
+        let assessmentAnswers = [];
+        
+        // Dynamic Data Structure - Ready for API integration
+        const heartHealthData = {
+            dailyTips: [
+                {
+                    id: 1,
+                    icon: "🥗",
+                    title: "Makan Sehat",
+                    description: "Konsumsi buah, sayuran, dan biji-bijian untuk jantung yang sehat",
+                    category: "nutrition",
+                    gradient: "from-red-50 to-pink-50"
+                },
+                {
+                    id: 2,
+                    icon: "🚶‍♀️",
+                    title: "Aktif Bergerak",
+                    description: "30 menit olahraga ringan setiap hari dapat memperkuat jantung",
+                    category: "exercise",
+                    gradient: "from-green-50 to-emerald-50"
+                },
+                {
+                    id: 3,
+                    icon: "😌",
+                    title: "Kelola Stres",
+                    description: "Meditasi dan relaksasi membantu menjaga tekanan darah normal",
+                    category: "mental_health",
+                    gradient: "from-blue-50 to-cyan-50"
+                },
+                {
+                    id: 4,
+                    icon: "💤",
+                    title: "Tidur Cukup",
+                    description: "Tidur 7-8 jam setiap malam penting untuk kesehatan jantung",
+                    category: "sleep",
+                    gradient: "from-purple-50 to-indigo-50"
+                },
+                {
+                    id: 5,
+                    icon: "💧",
+                    title: "Minum Air Putih",
+                    description: "Hidrasi yang baik membantu jantung memompa darah lebih efisien",
+                    category: "hydration",
+                    gradient: "from-cyan-50 to-blue-50"
+                },
+                {
+                    id: 6,
+                    icon: "🚭",
+                    title: "Hindari Rokok",
+                    description: "Berhenti merokok adalah langkah terbaik untuk kesehatan jantung",
+                    category: "lifestyle",
+                    gradient: "from-gray-50 to-slate-50"
+                }
+            ],
+            
+            heartDiseases: [
+                {
+                    id: 1,
+                    icon: "🫀",
+                    name: "Penyakit Jantung Koroner",
+                    description: "Penyempitan atau penyumbatan arteri koroner yang memasok darah ke jantung",
+                    severity: "high",
+                    prevalence: "35% populasi dewasa",
+                    symptoms: ["Nyeri dada", "Sesak napas", "Kelelahan"],
+                    riskFactors: ["Merokok", "Kolesterol tinggi", "Hipertensi"]
+                },
+                {
+                    id: 2,
+                    icon: "💥",
+                    name: "Hipertensi",
+                    description: "Tekanan darah tinggi yang dapat merusak pembuluh darah dan jantung",
+                    severity: "medium",
+                    prevalence: "45% populasi dewasa",
+                    symptoms: ["Sakit kepala", "Pusing", "Pandangan kabur"],
+                    riskFactors: ["Diet tinggi garam", "Obesitas", "Stres"]
+                },
+                {
+                    id: 3,
+                    icon: "⚡",
+                    name: "Aritmia",
+                    description: "Gangguan irama jantung yang tidak normal, terlalu cepat atau lambat",
+                    severity: "medium",
+                    prevalence: "12% populasi dewasa",
+                    symptoms: ["Jantung berdebar", "Pusing", "Pingsan"],
+                    riskFactors: ["Usia lanjut", "Penyakit jantung", "Kafein berlebihan"]
+                },
+                {
+                    id: 4,
+                    icon: "🔄",
+                    name: "Gagal Jantung",
+                    description: "Kondisi ketika jantung tidak dapat memompa darah secara efektif",
+                    severity: "high",
+                    prevalence: "8% populasi dewasa",
+                    symptoms: ["Sesak napas", "Pembengkakan kaki", "Kelelahan"],
+                    riskFactors: ["Hipertensi", "Diabetes", "Penyakit arteri koroner"]
+                },
+                {
+                    id: 5,
+                    icon: "🚫",
+                    name: "Serangan Jantung",
+                    description: "Kondisi darurat ketika aliran darah ke jantung terhenti",
+                    severity: "critical",
+                    prevalence: "2% populasi dewasa per tahun",
+                    symptoms: ["Nyeri dada hebat", "Mual muntah", "Keringat dingin"],
+                    riskFactors: ["Plak arteri", "Tekanan darah tinggi", "Diabetes"]
+                },
+                {
+                    id: 6,
+                    icon: "🫁",
+                    name: "Penyakit Katup",
+                    description: "Kerusakan pada katup jantung yang mengatur aliran darah",
+                    severity: "medium",
+                    prevalence: "5% populasi dewasa",
+                    symptoms: ["Sesak napas", "Kelelahan", "Nyeri dada"],
+                    riskFactors: ["Infeksi", "Kelainan bawaan", "Usia lanjut"]
+                }
+            ],
+            
+            preventionTips: [
+                {
+                    id: 1,
+                    icon: "🍎",
+                    category: "nutrition",
+                    title: "Pola Makan Sehat",
+                    description: "Konsumsi makanan rendah lemak jenuh, kolesterol, dan sodium. Perbanyak buah, sayuran, dan whole grain.",
+                    bgColor: "bg-green-50",
+                    textColor: "text-green-700",
+                    priority: "high"
+                },
+                {
+                    id: 2,
+                    icon: "🏃‍♂️",
+                    category: "exercise",
+                    title: "Aktivitas Fisik Rutin",
+                    description: "Lakukan olahraga aerobik minimal 150 menit per minggu atau 30 menit sehari, 5 hari seminggu.",
+                    bgColor: "bg-blue-50",
+                    textColor: "text-blue-700",
+                    priority: "high"
+                },
+                {
+                    id: 3,
+                    icon: "🚭",
+                    category: "lifestyle",
+                    title: "Hindari Rokok",
+                    description: "Rokok merusak pembuluh darah dan meningkatkan risiko penyakit jantung secara signifikan.",
+                    bgColor: "bg-purple-50",
+                    textColor: "text-purple-700",
+                    priority: "critical"
+                },
+                {
+                    id: 4,
+                    icon: "⚖️",
+                    category: "weight",
+                    title: "Jaga Berat Badan Ideal",
+                    description: "Obesitas meningkatkan beban kerja jantung dan risiko diabetes serta hipertensi.",
+                    bgColor: "bg-yellow-50",
+                    textColor: "text-yellow-700",
+                    priority: "high"
+                },
+                {
+                    id: 5,
+                    icon: "😴",
+                    category: "sleep",
+                    title: "Tidur yang Berkualitas",
+                    description: "Tidur 7-8 jam setiap malam membantu pemulihan jantung dan mengurangi stres.",
+                    bgColor: "bg-indigo-50",
+                    textColor: "text-indigo-700",
+                    priority: "medium"
+                },
+                {
+                    id: 6,
+                    icon: "🧘‍♀️",
+                    category: "mental_health",
+                    title: "Kelola Stres",
+                    description: "Stres kronis dapat meningkatkan tekanan darah dan risiko penyakit jantung.",
+                    bgColor: "bg-pink-50",
+                    textColor: "text-pink-700",
+                    priority: "medium"
+                }
+            ],
+            
+            healthStats: [
+                {
+                    id: 1,
+                    title: "Detak Jantung Normal",
+                    value: "60-100",
+                    unit: "BPM saat istirahat",
+                    icon: "💗",
+                    color: "text-heart-red",
+                    iconColor: "text-red-400"
+                },
+                {
+                    id: 2,
+                    title: "Tekanan Darah Ideal",
+                    value: "120/80",
+                    unit: "mmHg",
+                    icon: "🫀",
+                    color: "text-green-600",
+                    iconColor: "text-green-400"
+                },
+                {
+                    id: 3,
+                    title: "Kolesterol Total",
+                    value: "<200",
+                    unit: "mg/dL",
+                    icon: "🔬",
+                    color: "text-blue-600",
+                    iconColor: "text-blue-400"
+                },
+                {
+                    id: 4,
+                    title: "Olahraga per Minggu",
+                    value: "150",
+                    unit: "menit minimum",
+                    icon: "🏃‍♂️",
+                    color: "text-purple-600",
+                    iconColor: "text-purple-400"
+                }
+            ],
+            
+            randomTips: [
+                "💡 Tip: Tertawa dapat mengurangi hormon stres dan baik untuk jantung!",
+                "💡 Tip: Dark chocolate (70% kakao) baik untuk kesehatan jantung!",
+                "💡 Tip: Tidur 7-8 jam sehari membantu menjaga kesehatan jantung!",
+                "💡 Tip: Kurangi konsumsi garam untuk menjaga tekanan darah!",
+                "💡 Tip: Ikan berlemak seperti salmon kaya omega-3 untuk jantung!",
+                "💡 Tip: Jalan kaki 10,000 langkah sehari baik untuk kardiovaskular!",
+                "💡 Tip: Teh hijau mengandung antioksidan yang melindungi jantung!",
+                "💡 Tip: Musik klasik dapat membantu menurunkan tekanan darah!"
+            ]
+        };
+        
+        const questions = [
+            {
+                question: "Berapa usia Anda saat ini?",
+                type: "radio",
+                options: [
+                    { text: "Di bawah 40 tahun", score: 0 },
+                    { text: "40-50 tahun", score: 1 },
+                    { text: "51-60 tahun", score: 2 },
+                    { text: "Di atas 60 tahun", score: 3 }
+                ]
+            },
+            {
+                question: "Apakah Anda merokok atau pernah merokok?",
+                type: "radio",
+                options: [
+                    { text: "Tidak pernah merokok", score: 0 },
+                    { text: "Mantan perokok (berhenti >5 tahun)", score: 1 },
+                    { text: "Mantan perokok (berhenti <5 tahun)", score: 2 },
+                    { text: "Masih merokok", score: 3 }
+                ]
+            },
+            {
+                question: "Bagaimana kondisi tekanan darah Anda?",
+                type: "radio",
+                options: [
+                    { text: "Normal (di bawah 120/80 mmHg)", score: 0 },
+                    { text: "Sedikit tinggi (120-139/80-89 mmHg)", score: 1 },
+                    { text: "Tinggi (140-159/90-99 mmHg)", score: 2 },
+                    { text: "Sangat tinggi (di atas 160/100 mmHg)", score: 3 }
+                ]
+            },
+            {
+                question: "Bagaimana kondisi kolesterol Anda?",
+                type: "radio",
+                options: [
+                    { text: "Normal (di bawah 200 mg/dL)", score: 0 },
+                    { text: "Sedikit tinggi (200-239 mg/dL)", score: 1 },
+                    { text: "Tinggi (240-279 mg/dL)", score: 2 },
+                    { text: "Sangat tinggi (di atas 280 mg/dL)", score: 3 }
+                ]
+            },
+            {
+                question: "Apakah Anda memiliki diabetes?",
+                type: "radio",
+                options: [
+                    { text: "Tidak", score: 0 },
+                    { text: "Prediabetes", score: 1 },
+                    { text: "Diabetes tipe 2 terkontrol", score: 2 },
+                    { text: "Diabetes tipe 2 tidak terkontrol", score: 3 }
+                ]
+            },
+            {
+                question: "Bagaimana kondisi berat badan Anda?",
+                type: "radio",
+                options: [
+                    { text: "Normal (BMI 18.5-24.9)", score: 0 },
+                    { text: "Sedikit berlebih (BMI 25-29.9)", score: 1 },
+                    { text: "Obesitas (BMI 30-34.9)", score: 2 },
+                    { text: "Obesitas berat (BMI >35)", score: 3 }
+                ]
+            },
+            {
+                question: "Seberapa sering Anda berolahraga?",
+                type: "radio",
+                options: [
+                    { text: "Rutin 5x seminggu atau lebih", score: 0 },
+                    { text: "3-4x seminggu", score: 1 },
+                    { text: "1-2x seminggu", score: 2 },
+                    { text: "Jarang atau tidak pernah", score: 3 }
+                ]
+            },
+            {
+                question: "Apakah ada riwayat penyakit jantung dalam keluarga?",
+                type: "radio",
+                options: [
+                    { text: "Tidak ada", score: 0 },
+                    { text: "Kakek/nenek", score: 1 },
+                    { text: "Paman/bibi atau saudara sepupu", score: 2 },
+                    { text: "Orang tua atau saudara kandung", score: 3 }
+                ]
+            },
+            {
+                question: "Bagaimana tingkat stres dalam hidup Anda?",
+                type: "radio",
+                options: [
+                    { text: "Rendah, jarang merasa stres", score: 0 },
+                    { text: "Sedang, kadang merasa stres", score: 1 },
+                    { text: "Tinggi, sering merasa stres", score: 2 },
+                    { text: "Sangat tinggi, selalu stres", score: 3 }
+                ]
+            },
+            {
+                question: "Bagaimana pola makan Anda sehari-hari?",
+                type: "radio",
+                options: [
+                    { text: "Sangat sehat (banyak buah, sayur, sedikit lemak)", score: 0 },
+                    { text: "Cukup sehat (kadang makan sehat)", score: 1 },
+                    { text: "Kurang sehat (sering fast food, gorengan)", score: 2 },
+                    { text: "Tidak sehat (selalu makanan berlemak/asin)", score: 3 }
+                ]
+            }
+        ];
+
+        // Navigation functions
+        function showSection(sectionName) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section-content');
+            sections.forEach(section => section.classList.add('hidden'));
+            
+            // Show target section
+            document.getElementById(sectionName).classList.remove('hidden');
+            
+            // Update navigation buttons
+            const navButtons = document.querySelectorAll('.nav-btn');
+            navButtons.forEach(btn => {
+                btn.classList.remove('bg-heart-red', 'text-white');
+                btn.classList.add('text-gray-700', 'hover:text-heart-red');
+            });
+            
+            // Highlight active button
+            event.target.classList.remove('text-gray-700', 'hover:text-heart-red');
+            event.target.classList.add('bg-heart-red', 'text-white');
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Assessment functions
+        function displayQuestion() {
+            const question = questions[currentQuestionIndex];
+            const container = document.getElementById('questionContainer');
+            
+            let html = `
+                <h3 class="text-2xl font-semibold mb-6 text-gray-800">${question.question}</h3>
+                <div class="space-y-3">
+            `;
+            
+            question.options.forEach((option, index) => {
+                const isChecked = assessmentAnswers[currentQuestionIndex] === index ? 'checked' : '';
+                html += `
+                    <label class="flex items-center p-4 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-heart-red hover:bg-red-50 transition-all duration-300 ${isChecked ? 'border-heart-red bg-red-50' : ''}">
+                        <input type="radio" name="question${currentQuestionIndex}" value="${index}" class="mr-4 text-heart-red focus:ring-heart-red" ${isChecked} onchange="selectAnswer(${index})">
+                        <span class="text-lg">${option.text}</span>
+                    </label>
+                `;
+            });
+            
+            html += '</div>';
+            container.innerHTML = html;
+            
+            // Update progress
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+            document.getElementById('totalQuestions').textContent = questions.length;
+            document.getElementById('progressBar').style.width = `${((currentQuestionIndex + 1) / questions.length) * 100}%`;
+            
+            // Update buttons
+            document.getElementById('prevBtn').disabled = currentQuestionIndex === 0;
+            document.getElementById('nextBtn').textContent = currentQuestionIndex === questions.length - 1 ? 'Lihat Hasil' : 'Selanjutnya';
+        }
+
+        function selectAnswer(answerIndex) {
+            assessmentAnswers[currentQuestionIndex] = answerIndex;
+        }
+
+        function nextQuestion() {
+            if (assessmentAnswers[currentQuestionIndex] === undefined) {
+                alert('Silakan pilih jawaban terlebih dahulu!');
+                return;
+            }
+            
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                displayQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                displayQuestion();
+            }
+        }
+
+        function calculateRiskScore() {
+            let totalScore = 0;
+            assessmentAnswers.forEach((answerIndex, questionIndex) => {
+                if (answerIndex !== undefined) {
+                    totalScore += questions[questionIndex].options[answerIndex].score;
+                }
+            });
+            return totalScore;
+        }
+
+        function getRiskLevel(score) {
+            if (score <= 7) {
+                return {
+                    level: 'Risiko Rendah',
+                    color: 'text-green-600',
+                    icon: '💚',
+                    description: 'Selamat! Risiko penyakit jantung Anda tergolong rendah. Pertahankan gaya hidup sehat yang sudah Anda jalani.',
+                    recommendations: [
+                        'Pertahankan pola makan sehat dengan banyak buah dan sayuran',
+                        'Lanjutkan rutinitas olahraga yang sudah baik',
+                        'Lakukan pemeriksaan kesehatan rutin setiap tahun',
+                        'Jaga berat badan ideal dan hindari stres berlebihan'
+                    ]
+                };
+            } else if (score <= 14) {
+                return {
+                    level: 'Risiko Sedang',
+                    color: 'text-yellow-600',
+                    icon: '💛',
+                    description: 'Anda memiliki risiko sedang untuk mengalami penyakit jantung. Beberapa perubahan gaya hidup dapat membantu menurunkan risiko.',
+                    recommendations: [
+                        'Mulai program olahraga rutin minimal 150 menit per minggu',
+                        'Kurangi konsumsi makanan berlemak dan tinggi garam',
+                        'Pertimbangkan untuk berhenti merokok jika masih merokok',
+                        'Kelola stres dengan teknik relaksasi atau meditasi',
+                        'Konsultasi dengan dokter untuk pemeriksaan lebih detail'
+                    ]
+                };
+            } else {
+                return {
+                    level: 'Risiko Tinggi',
+                    color: 'text-red-600',
+                    icon: '❤️',
+                    description: 'Risiko penyakit jantung Anda tergolong tinggi. Sangat disarankan untuk segera berkonsultasi dengan dokter.',
+                    recommendations: [
+                        'SEGERA konsultasi dengan dokter spesialis jantung',
+                        'Lakukan pemeriksaan kesehatan menyeluruh',
+                        'Mulai perubahan drastis dalam pola makan dan gaya hidup',
+                        'Hentikan kebiasaan merokok dan minum alkohol',
+                        'Pantau tekanan darah dan kadar gula darah secara rutin',
+                        'Pertimbangkan pengobatan preventif sesuai anjuran dokter'
+                    ]
+                };
+            }
+        }
+
+        function showResults() {
+            document.getElementById('assessmentForm').classList.add('hidden');
+            document.getElementById('assessmentResults').classList.remove('hidden');
+            
+            const score = calculateRiskScore();
+            const riskData = getRiskLevel(score);
+            
+            // Update result display
+            document.getElementById('resultIcon').textContent = riskData.icon;
+            document.getElementById('resultTitle').textContent = riskData.level;
+            document.getElementById('resultTitle').className = `text-3xl font-bold mb-4 ${riskData.color}`;
+            document.getElementById('resultDescription').textContent = riskData.description;
+            document.getElementById('riskScore').innerHTML = `Skor Risiko: <span class="${riskData.color}">${score}/30</span>`;
+            
+            // Update recommendations
+            const recommendationsContainer = document.getElementById('recommendations');
+            let recommendationsHtml = '<h3 class="text-xl font-semibold mb-4 text-gray-800">Rekomendasi untuk Anda:</h3>';
+            
+            riskData.recommendations.forEach((recommendation, index) => {
+                recommendationsHtml += `
+                    <div class="flex items-start space-x-3 p-4 bg-gray-50 rounded-lg">
+                        <div class="flex-shrink-0 w-6 h-6 bg-heart-red text-white rounded-full flex items-center justify-center text-sm font-semibold">
+                            ${index + 1}
+                        </div>
+                        <p class="text-gray-700">${recommendation}</p>
+                    </div>
+                `;
+            });
+            
+            recommendationsContainer.innerHTML = recommendationsHtml;
+        }
+
+        function restartAssessment() {
+            currentQuestionIndex = 0;
+            assessmentAnswers = [];
+            document.getElementById('assessmentForm').classList.remove('hidden');
+            document.getElementById('assessmentResults').classList.add('hidden');
+            displayQuestion();
+        }
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show dashboard by default
+            showSection('dashboard');
+            
+            // Initialize assessment
+            displayQuestion();
+            
+            // Add smooth scrolling
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            // Add intersection observer for animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe all cards and sections
+            document.querySelectorAll('.bg-white').forEach(card => {
+                observer.observe(card);
+            });
+        });
+
+        // Add some interactive features
+        function showHeartTip() {
+            const tips = [
+                "💡 Tip: Tertawa dapat mengurangi hormon stres dan baik untuk jantung!",
+                "💡 Tip: Dark chocolate (70% kakao) baik untuk kesehatan jantung!",
+                "💡 Tip: Tidur 7-8 jam sehari membantu menjaga kesehatan jantung!",
+                "💡 Tip: Kurangi konsumsi garam untuk menjaga tekanan darah!",
+                "💡 Tip: Ikan berlemak seperti salmon kaya omega-3 untuk jantung!"
+            ];
+            
+            const randomTip = tips[Math.floor(Math.random() * tips.length)];
+            
+            // Create tip notification
+            const tipDiv = document.createElement('div');
+            tipDiv.className = 'fixed top-20 right-4 bg-heart-red text-white p-4 rounded-lg shadow-lg z-50 max-w-sm transform translate-x-full transition-transform duration-300';
+            tipDiv.innerHTML = `
+                <div class="flex items-start space-x-3">
+                    <div class="text-2xl">❤️</div>
+                    <div>
+                        <p class="font-medium">${randomTip}</p>
+                        <button onclick="closeTip(this)" class="text-xs text-red-200 hover:text-white mt-2">Tutup</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(tipDiv);
+            
+            // Animate in
+            setTimeout(() => {
+                tipDiv.classList.remove('translate-x-full');
+            }, 100);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                if (tipDiv.parentNode) {
+                    tipDiv.classList.add('translate-x-full');
+                    setTimeout(() => {
+                        if (tipDiv.parentNode) {
+                            tipDiv.remove();
+                        }
+                    }, 300);
+                }
+            }, 5000);
+        }
+
+        function closeTip(button) {
+            const tipDiv = button.closest('div').parentNode.parentNode;
+            tipDiv.classList.add('translate-x-full');
+            setTimeout(() => {
+                if (tipDiv.parentNode) {
+                    tipDiv.remove();
+                }
+            }, 300);
+        }
+
+        // Show random tip every 30 seconds when on dashboard
+        setInterval(() => {
+            if (!document.getElementById('dashboard').classList.contains('hidden')) {
+                showHeartTip();
+            }
+        }, 30000);
+
+        // Add keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Navigate assessment with arrow keys
+            if (!document.getElementById('assessment').classList.contains('hidden')) {
+                if (e.key === 'ArrowLeft' && !document.getElementById('prevBtn').disabled) {
+                    previousQuestion();
+                } else if (e.key === 'ArrowRight') {
+                    nextQuestion();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
