@@ -96,10 +96,9 @@ function previousQuestion2() {
 
 function updateProgress() {
     const progress = (currentQuestion2 / totalQuestions2) * 100;
-    document.getElementById('progressBar').style.width = progress + '%';
+    document.getElementById('progressBarAssessment').style.width = progress + '%';
     document.getElementById('progressText').textContent = currentQuestion2 + '/' + totalQuestions2;
 }
-
 function calculateTotalScore() {
     totalScore = 0;
     for (let key in assessmentData) {
@@ -108,7 +107,8 @@ function calculateTotalScore() {
     return totalScore;
 }
 
-function getRiskLevel(score) {
+function getRiskLevelAssessment(score) {
+    if (score <= 0) return 'none';
     if (score <= 5) return 'low';
     if (score <= 10) return 'medium';
     return 'high';
@@ -116,27 +116,48 @@ function getRiskLevel(score) {
 
 function resultsAssessmentScreen() {
     document.getElementById('assessmentScreen').classList.add('hidden');
-    document.getElementById('resultsScreen').classList.remove('hidden');
+    document.getElementById('resultsAssessmentScreen').classList.remove('hidden');
 
-    const score = calculateTotalScore();
-    const riskLevel = getRiskLevel(score);
+    const scoreAssessment = calculateTotalScore();
+    const riskLevelAssessment = getRiskLevelAssessment(scoreAssessment);
+    console.log('Risk Level Assessment:', riskLevelAssessment);
+    console.log('Risk Level Assessment:', scoreAssessment);
 
-    const resultIcon = document.getElementById('resultIcon');
-    const resultTitle = document.getElementById('resultTitle');
-    const scoreDisplay = document.getElementById('scoreDisplay');
-    const resultDescription = document.getElementById('resultDescription');
-    const recommendations = document.getElementById('recommendations');
+    const resultIconAssessment = document.getElementById('resultIconAssessment');
+    const resultTitleAssessment = document.getElementById('resultTitleAssessment');
+    const scoreDisplayAssessment = document.getElementById('scoreDisplayAssessment');
+    const resultDescriptionAssessment = document.getElementById('resultDescriptionAssessment');
+    const recommendations = document.getElementById('recommendationsAssessment');
 
     // Update progress to 100%
     document.getElementById('progressBar').style.width = '100%';
     document.getElementById('progressText').textContent = '5/5';
 
-    scoreDisplay.textContent = score;
-
-    if (riskLevel === 'low') {
-        resultIcon.className = 'w-24 h-24 mx-auto rounded-full flex items-center justify-center mb-4 risk-low';
-        resultTitle.textContent = 'Risiko RINGAN';
-        resultDescription.innerHTML = `
+    scoreDisplayAssessment.textContent = scoreAssessment;
+    if (riskLevelAssessment === 'none') {
+        resultIconAssessment.className = 'w-24 h-24 mx-auto rounded-full flex items-center justify-center mb-4 risk-low';
+        resultTitleAssessment.textContent = 'Risiko RINGAN';
+        resultDescriptionAssessment.innerHTML = `
+                    <p class="text-sm">Berdasarkan assessment ini, kondisi jantung Anda menunjukkan <strong>risiko ringan</strong>. Gejala yang Anda alami masih dalam kategori ringan dan dapat dikelola dengan baik.</p>
+                `;
+        recommendations.innerHTML = `
+                    <li class="flex items-start">
+                        <span class="text-green-500 mr-2">✓</span>
+                        <span>Pertahankan gaya hidup sehat dengan olahraga teratur</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-green-500 mr-2">✓</span>
+                        <span>Konsumsi makanan bergizi seimbang, batasi garam dan lemak</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-green-500 mr-2">✓</span>
+                        <span>Rutin check-up kesehatan sesuai jadwal dokter</span>
+                    </li>
+                `;
+    } else if (riskLevelAssessment === 'low') {
+        resultIconAssessment.className = 'w-24 h-24 mx-auto rounded-full flex items-center justify-center mb-4 risk-low';
+        resultTitleAssessment.textContent = 'Risiko RINGAN';
+        resultDescriptionAssessment.innerHTML = `
                     <p class="text-sm">Berdasarkan assessment ini, kondisi jantung Anda menunjukkan <strong>risiko ringan</strong>. Gejala yang Anda alami masih dalam kategori ringan dan dapat dikelola dengan baik.</p>
                 `;
         recommendations.innerHTML = `
@@ -157,10 +178,10 @@ function resultsAssessmentScreen() {
                         <span>Rutin check-up kesehatan sesuai jadwal dokter</span>
                     </li>
                 `;
-    } else if (riskLevel === 'medium') {
-        resultIcon.className = 'w-24 h-24 mx-auto rounded-full flex items-center justify-center mb-4 risk-medium';
-        resultTitle.textContent = 'Risiko SEDANG';
-        resultDescription.innerHTML = `
+    } else if (riskLevelAssessment === 'medium') {
+        resultIconAssessment.className = 'w-24 h-24 mx-auto rounded-full flex items-center justify-center mb-4 risk-medium';
+        resultTitleAssessment.textContent = 'Risiko SEDANG';
+        resultDescriptionAssessment.innerHTML = `
                     <p class="text-sm">Assessment menunjukkan <strong>risiko sedang</strong> yang memerlukan perhatian medis. Beberapa gejala yang Anda alami perlu dievaluasi lebih lanjut oleh dokter.</p>
                 `;
         recommendations.innerHTML = `
@@ -182,9 +203,9 @@ function resultsAssessmentScreen() {
                     </li>
                 `;
     } else {
-        resultIcon.className = 'w-24 h-24 mx-auto rounded-full flex items-center justify-center mb-4 risk-high';
-        resultTitle.textContent = 'Risiko BERAT';
-        resultDescription.innerHTML = `
+        resultIconAssessment.className = 'w-24 h-24 mx-auto rounded-full flex items-center justify-center mb-4 risk-high';
+        resultTitleAssessment.textContent = 'Risiko BERAT';
+        resultDescriptionAssessment.innerHTML = `
                     <p class="text-sm"><strong>PERHATIAN:</strong> Assessment menunjukkan <strong>risiko berat</strong>. Gejala yang Anda alami memerlukan evaluasi dan penanganan medis segera di unit gawat darurat.</p>
                 `;
         recommendations.innerHTML = `
@@ -220,7 +241,7 @@ function resetAssessment() {
     });
 
     // Show welcome screen
-    document.getElementById('resultsScreen').classList.add('hidden');
+    document.getElementById('resultsAssessmentScreen').classList.add('hidden');
     document.getElementById('welcomeScreen').classList.remove('hidden');
 
     // Reset progress
