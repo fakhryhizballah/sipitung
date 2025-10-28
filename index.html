@@ -207,6 +207,50 @@
                         </div>
                     </div>
                 </div>
+                <!-- Quick Tips -->
+                <div class="bg-white rounded-3xl p-8 shadow-xl mb-8">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Kalkulator BMI (Body Mass Index) atau Indeks Massa Tubuh</h2>
+                    <p class="text-sm text-gray-600 text-center mb-4">Cek berat badan ideal dengan kalkulator BMI (Body Mass Index) atau Indeks Massa Tubuh.</p>
+                    <div class="p-6">
+                        <form id="bmiForm" class="space-y-6">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Jenis Kelamin</label>
+                                <div class="flex space-x-6">
+                                    <label class="flex items-center cursor-pointer">
+                                        <input type="radio" name="gender" value="male" required class="mr-2 text-indigo-600 focus:ring-indigo-500">
+                                        <span class="text-gray-700">Laki-laki</span>
+                                    </label>
+                                    <label class="flex items-center cursor-pointer">
+                                        <input type="radio" name="gender" value="female" required class="mr-2 text-indigo-600 focus:ring-indigo-500">
+                                        <span class="text-gray-700">Perempuan</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="height" class="block text-sm font-semibold text-gray-700 mb-2">Tinggi Badan (cm)</label>
+                                    <input type="number" id="height" name="height" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" placeholder="Contoh: 170">
+                                </div>
+                                <div>
+                                    <label for="weight" class="block text-sm font-semibold text-gray-700 mb-2">Berat Badan (kg)</label>
+                                    <input type="number" id="weight" name="weight" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" placeholder="Contoh: 65">
+                                </div>
+                            </div>
+                            <button type="submit" class="w-full bg-indigo-600 text-white py-3 px-4 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 font-semibold text-lg transition duration-200">Hitung BMI</button>
+                        </form>
+                        <!-- Result -->
+                        <div id="result" class="mt-8 hidden fade-in">
+                            <div class="result-card p-6 rounded-lg text-center">
+                                <h2 class="text-2xl font-bold mb-2">Hasil BMI Anda</h2>
+                                <p id="bmiValue" class="text-4xl font-extrabold mb-4"></p>
+                                <p id="category" class="text-lg font-semibold mb-4"></p>
+                                <div id="icon" class="text-6xl mb-4"></div>
+                                <p id="description" class="text-sm leading-relaxed"></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
             </div>
         </section>
 
@@ -1899,6 +1943,47 @@
                 } else if (e.key === 'ArrowRight') {
                     nextQuestion();
                 }
+            }
+        });
+    </script>
+    <script>
+      document.getElementById('bmiForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const height = parseFloat(document.getElementById('height').value) / 100; // Convert cm to m
+            const weight = parseFloat(document.getElementById('weight').value);
+            const gender = document.querySelector('input[name="gender"]:checked').value;
+            
+            if (height > 0 && weight > 0) {
+                const bmi = (weight / (height * height)).toFixed(1);
+                let category = '';
+                let icon = '';
+                let description = '';
+                
+                if (bmi < 18.5) {
+                    category = 'Kurus';
+                    icon = '⚖️'; // Scales for underweight
+                    description = 'Anda memiliki berat badan kurang dari normal. Disarankan untuk meningkatkan asupan nutrisi dan berkonsultasi dengan dokter.';
+                } else if (bmi >= 18.5 && bmi <= 22.9) {
+                    category = 'Normal';
+                    icon = '✅'; // Checkmark for normal
+                    description = 'Berat badan Anda ideal. Jaga pola hidup sehat dengan olahraga teratur dan makan seimbang.';
+                } else if (bmi >= 23 && bmi <= 24.9) {
+                    category = 'Gemuk';
+                    icon = '⚠️'; // Warning for overweight
+                    description = 'Anda sedikit berlebih berat badan. Mulai kontrol pola makan dan tingkatkan aktivitas fisik.';
+                } else {
+                    category = 'Obesitas';
+                    icon = '🚨'; // Alert for obese
+                    description = 'Berat badan Anda berlebih. Segera konsultasikan dengan dokter untuk program penurunan berat badan yang aman.';
+                }
+                 document.getElementById('bmiValue').textContent = bmi;
+                document.getElementById('category').textContent = category;
+                document.getElementById('icon').textContent = icon;
+                document.getElementById('description').textContent = description;
+                document.getElementById('result').classList.remove('hidden');
+            } else {
+                alert('Masukkan nilai yang valid untuk tinggi dan berat badan.');
             }
         });
     </script>
