@@ -117,8 +117,10 @@ function getRiskLevelAssessment(score) {
 function resultsAssessmentScreen() {
     document.getElementById('assessmentScreen').classList.add('hidden');
     document.getElementById('resultsAssessmentScreen').classList.remove('hidden');
-
     const scoreAssessment = calculateTotalScore();
+    if (scoreAssessment > 15) {
+        scoreAssessment = 15
+    }
     const riskLevelAssessment = getRiskLevelAssessment(scoreAssessment);
     console.log('Risk Level Assessment:', riskLevelAssessment);
     console.log('Risk Level Assessment:', scoreAssessment);
